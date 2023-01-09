@@ -5,4 +5,6 @@ module.exports = function(app){
     
     app.route('/')
         .get(jsonku.index);
+    app.route('/tampimahasiswa')
+        .get(jsonku.getallmahasiswa);
 }
