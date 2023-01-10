@@ -5,13 +5,29 @@ var response = require('../res');
 var jwt = require('jsonwebtoken');
 var config = require('../config/secret');
 var ip = require('ip');
+var joi = require('joi');
+
 
 exports.registrasi = function (req,res){
+    var username = req.body.username
+    var password = req.body.password
+    var email = req.body.email
+    var role= req.body.role
+
+    var scheme = joi.object({
+        username:joi.string().min(3).required(),
+        password : joi.string().min(3).required(),
+        email: joi.string().email().required(),
+        role : joi.string().min(1).required()
+       
+    });
+    var {error} = scheme.validate(req.body)
+    if (error) return res.status(401).send({auth:false,message:'username dan password minimal 3 huruf'});
     var post = {
-        username: req.body.username,
-        email:req.body.email,
-        password:md5(req.body.password),
-        role: req.body.role,
+        username: username,
+        email: email,
+        password:md5(password),
+        role: role,
         tanggal_daftar: new Date()
     }
     var query = "SELECT email FROM ?? WHERE ??=?";
