@@ -82,6 +82,10 @@ exports.login = function (req,res){
                 res.json({"error": true,"mesage": "Email Paswoord salah"});
              }
         }
-    })
+    });
+}
+
+exports.halamanrahasia = function(req,res){
+    response.ok("halaman ini hanya untuk user dengan role = 2",res);
 }
 
